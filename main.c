@@ -17,9 +17,16 @@
 #include <controller.h>
 #include <screen.h>
 
+#include "pipe.h"
+#include "pipearray.h"
+#include "patterns.h"
 
 // run once on startup
-void reset(void) { }
+void reset(void) { 
+    pipearray_init();
+    load_patterns();
+    stop();
+}
 
 // run 60 times a second
 void do_logic(void) { }

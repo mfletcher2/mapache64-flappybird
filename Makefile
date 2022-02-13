@@ -1,12 +1,12 @@
 
 # Define a list of all C and Assemnbly source files
-CXX_SRC = main.c
-ASM_SRC =
-HEADERS =
+CXX_SRC = main.c patterns.c pipe.c pipearray.c
+ASM_SRC = patterns.s
+HEADERS = patterns.h pipe.h pipearray.h
 
 
 # List of PNG images used for patterns
-IMAGES =
+IMAGES = white.png
 
 
 # Where the intermediate-stage Assembly/object files will be saved
