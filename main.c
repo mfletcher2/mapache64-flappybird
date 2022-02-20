@@ -21,10 +21,13 @@
 #include "pipearray.h"
 #include "patterns.h"
 
+void fill_vram(void);
+
 // run once on startup
 void reset(void) { 
     pipearray_init();
-    load_patterns();
+    load_patterns();  
+    fill_vram();
     stop();
 }
 
@@ -32,4 +35,7 @@ void reset(void) {
 void do_logic(void) { }
 
 // run after do_logic and once gpu is idle
-void fill_vram(void) { }
+void fill_vram(void) { 
+    pipearray_draw();
+
+}
