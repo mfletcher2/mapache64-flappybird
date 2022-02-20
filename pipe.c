@@ -26,20 +26,23 @@ bool pipe_collision(pipe_t* p, coordinate_t* bird) {
 }
 
 void pipe_draw(pipe_t* p) {
-    uint8_t j, newy;
+    uint8_t j;
 
-    newy = p->hole.y;
     for (j = 0; j < PIPE_OBMAS_SIZE; j++) {
-        OBM[p->obmas[j]].pattern_config = white_pattern;
         OBM[p->obmas[j]].x = p->hole.x;
+    }
 
-        newy -= 8;
-        if (newy > p->hole.y && newy < p->hole.y + PIPE_HOLE_HEIGHT)
-            newy = p->hole.y + PIPE_HOLE_HEIGHT;
-        OBM[p->obmas[j]].y = newy;
-        if (newy < SCREEN_START) newy += SCREEN_HEIGHT;
-
-        OBM[p->obmas[j]].color = WHITE_C_MASK;
+    if (OBM[p->obmas[0]].y != p->hole.y - 8 &&
+        OBM[p->obmas[0]].y !=
+            p->hole.y - 8 + SCREEN_HEIGHT) {  // if y value has changed
+        uint8_t newy = p->hole.y;
+        for (j = 0; j < PIPE_OBMAS_SIZE; j++) {
+            newy -= 8;
+            if (newy > p->hole.y && newy < p->hole.y + PIPE_HOLE_HEIGHT)
+                newy = p->hole.y + PIPE_HOLE_HEIGHT;
+            OBM[p->obmas[j]].y = newy;
+            if (newy < SCREEN_START) newy += SCREEN_HEIGHT;
+        }
     }
 }
 

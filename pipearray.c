@@ -2,6 +2,8 @@
 
 #include "bird.h"
 #include "pipe.h"
+#include "patterns.h"
+#include <vram.h>
 
 pipe_t pipearray[PIPEARRAY_SIZE];
 
@@ -14,6 +16,8 @@ void pipearray_init(void) {
         pipe_newy(pipearray + i);
         for (j = 0; j < PIPE_OBMAS_SIZE; j++) {
             pipearray[i].obmas[j] = k;
+            OBM[k].pattern_config = white_pattern;
+            OBM[k].color = WHITE_C_MASK;
             k++;
         }
     }

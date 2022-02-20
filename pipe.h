@@ -10,8 +10,8 @@
 #define PIPE_WIDTH 8
 #define PIPE_HOLE_HEIGHT 24
 #define PIPE_OBMAS_SIZE 15
-#define SCREEN_START (8*7)
-#define SCREEN_HEIGHT (8*15)
+#define SCREEN_START (8 * 7)
+#define SCREEN_HEIGHT (8 * 15)
 #define SCREEN_END (SCREEN_HEIGHT + SCREEN_START)
 #define SCREEN_WIDTH 256
 
@@ -21,7 +21,6 @@ typedef struct pipe_s {
 } pipe_t;
 
 void pipe_move(pipe_t *);
-
 
 void pipe_newy(pipe_t *);
 
