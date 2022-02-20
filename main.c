@@ -32,7 +32,9 @@ void reset(void) {
 }
 
 // run 60 times a second
-void do_logic(void) { }
+void do_logic(void) { 
+    pipearray_move();
+}
 
 // run after do_logic and once gpu is idle
 void fill_vram(void) { 

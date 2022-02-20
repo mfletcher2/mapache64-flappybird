@@ -13,6 +13,7 @@
 #define SCREEN_START (8*7)
 #define SCREEN_HEIGHT (8*15)
 #define SCREEN_END (SCREEN_HEIGHT + SCREEN_START)
+#define SCREEN_WIDTH 256
 
 typedef struct pipe_s {
     coordinate_t hole;
@@ -21,9 +22,9 @@ typedef struct pipe_s {
 
 void pipe_move(pipe_t *);
 
-void pipe_draw(pipe_t *);
 
 void pipe_newy(pipe_t *);
+
 
 bool pipe_collision(pipe_t *p, coordinate_t *bird);
 

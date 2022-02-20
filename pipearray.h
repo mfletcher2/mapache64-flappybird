@@ -8,5 +8,7 @@
 extern pipe_t pipearray[PIPEARRAY_SIZE];
 
 void pipearray_init(void);
+void pipearray_draw(void);
+void pipearray_move(void);
 
 #endif
