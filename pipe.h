@@ -25,6 +25,7 @@ void pipe_move(pipe_t *);
 
 void pipe_newy(pipe_t *);
 
+void pipe_draw(pipe_t *);
 
 bool pipe_collision(pipe_t *p, coordinate_t *bird);
 
