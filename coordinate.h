@@ -4,7 +4,8 @@
 #include <int.h>
 
 typedef struct coordinate_s {
-    uint8_t x, y;
+    sint16_t x;
+    sint8_t y;
 } coordinate_t;
 
 #endif
