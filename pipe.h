@@ -6,7 +6,7 @@
 
 #include "coordinate.h"
 
-#define PIPE_SPEED 3
+#define PIPE_SPEED 1
 #define PIPE_WIDTH 8
 #define PIPE_HOLE_HEIGHT 24
 #define PIPE_OBMAS_SIZE 15
