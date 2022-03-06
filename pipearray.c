@@ -1,9 +1,10 @@
 #include "pipearray.h"
 
-#include "bird.h"
-#include "pipe.h"
-#include "patterns.h"
 #include <vram.h>
+
+#include "bird.h"
+#include "patterns.h"
+#include "pipe.h"
 
 pipe_t pipearray[PIPEARRAY_SIZE];
 

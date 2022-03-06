@@ -2,7 +2,6 @@
 #ifndef __PATTERNS_H
 #define __PATTERNS_H
 
-
 #include <vram.h>
 
 extern const pattern_t white_pattern;

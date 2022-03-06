@@ -1,9 +1,9 @@
 #include "pipe.h"
 
-#include <stdlib.h>
-#include <vram.h>
-#include <stop.h>
 #include <mapache64_zero_page.h>
+#include <stdlib.h>
+#include <stop.h>
+#include <vram.h>
 
 #include "bird.h"
 #include "patterns.h"
@@ -50,5 +50,6 @@ void pipe_draw(pipe_t* p) {
 
 void pipe_newy(pipe_t* p) {
     // replace 16 with rand()
-    p->hole.y = SCREEN_START + 8 + rand() % (SCREEN_HEIGHT - PIPE_HOLE_HEIGHT - 16);
+    p->hole.y =
+        SCREEN_START + 8 + rand() % (SCREEN_HEIGHT - PIPE_HOLE_HEIGHT - 16);
 }

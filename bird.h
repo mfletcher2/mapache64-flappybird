@@ -1,14 +1,15 @@
 #ifndef __BIRD_H
 #define __BIRD_H
 
-#include "coordinate.h"
 #include <Q9_6.h>
+
+#include "coordinate.h"
 
 #define BIRD_WIDTH 8
 #define BIRD_HEIGHT 8
 #define BIRD_OBMAS_SIZE 1
 #define BIRD_FLAP_STRENGTH -(SINT_TO_Q9_6(3))
-#define BIRD_GRAVITY ((Q9_6)0x000a) 
+#define BIRD_GRAVITY ((Q9_6)0x000a)
 
 typedef struct bird_s {
     coordinate_t pos;
