@@ -46,9 +46,10 @@ void do_logic(void) {
 
     pipearray_move();
 
-    if (CONTROLLER_1_PEDGE & CONTROLLER_A_MASK) bird_flap(&bird);
+    if ((CONTROLLER_1_PEDGE & CONTROLLER_A_MASK) && bird.pos.y > SCREEN_START)
+        bird_flap(&bird);
 
-    bird_move(&bird);
+    if (bird.pos.y < SCREEN_END) bird_move(&bird);
 
     pipearray_draw();
     bird_draw(&bird);
