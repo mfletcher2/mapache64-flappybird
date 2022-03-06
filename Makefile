@@ -1,8 +1,8 @@
 
 # Define a list of all C and Assemnbly source files
-CXX_SRC = main.c patterns.c pipe.c pipearray.c
+CXX_SRC = main.c patterns.c pipe.c pipearray.c bird.c
 ASM_SRC = patterns.s
-HEADERS = patterns.h pipe.h pipearray.h
+HEADERS = patterns.h pipe.h pipearray.h bird.h coordinate.h
 
 
 # List of PNG images used for patterns
