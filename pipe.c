@@ -2,14 +2,16 @@
 
 #include <stdlib.h>
 #include <vram.h>
+#include <stop.h>
+#include <mapache64_zero_page.h>
 
 #include "bird.h"
 #include "patterns.h"
 
 void pipe_move(pipe_t* p) {
     p->hole.x -= PIPE_SPEED;
-    if (p->hole.x < -8) {
-        p->hole.x = SCREEN_WIDTH;
+    if (p->hole.x < 0) {
+        p->hole.x = SCREEN_WIDTH - 1;
         pipe_newy(p);
     }
 }
@@ -48,5 +50,5 @@ void pipe_draw(pipe_t* p) {
 
 void pipe_newy(pipe_t* p) {
     // replace 16 with rand()
-    p->hole.y = SCREEN_START + 16 % (SCREEN_HEIGHT - PIPE_HOLE_HEIGHT);
+    p->hole.y = SCREEN_START + 8 + rand() % (SCREEN_HEIGHT - PIPE_HOLE_HEIGHT - 16);
 }
