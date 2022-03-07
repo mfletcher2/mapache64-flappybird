@@ -18,9 +18,10 @@
 typedef struct pipe_s {
     coordinate_t hole;
     uint8_t obmas[PIPE_OBMAS_SIZE];
+    bool passed;
 } pipe_t;
 
-void pipe_move(pipe_t *);
+bool pipe_move(pipe_t *);
 
 void pipe_newy(pipe_t *);
 

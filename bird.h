@@ -10,6 +10,7 @@
 #define BIRD_OBMAS_SIZE 1
 #define BIRD_FLAP_STRENGTH -(SINT_TO_Q9_6(2))
 #define BIRD_GRAVITY ((Q9_6)0x000a)
+#define BIRD_X 48
 
 typedef struct bird_s {
     coordinate_t pos;

@@ -7,7 +7,7 @@
 
 void bird_init(bird_t *bird) {
     uint8_t i;
-    bird->pos.x = 48;
+    bird->pos.x = BIRD_X;
     bird->pos.y = SCREEN_START + (SCREEN_HEIGHT / 2);
     bird->y_velocity = 0;
 

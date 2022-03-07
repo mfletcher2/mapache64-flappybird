@@ -63,7 +63,10 @@ void do_logic(void) {
     CONTROLLER_1_PREV = CONTROLLER_1;
 
     if (game_running) {
-        pipearray_move();
+        if(pipearray_move()) {
+            score++;
+            draw_score();
+        }
 
         if ((CONTROLLER_1_PEDGE & CONTROLLER_A_MASK) &&
             bird.pos.y > SCREEN_START)

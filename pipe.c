@@ -8,12 +8,19 @@
 #include "bird.h"
 #include "patterns.h"
 
-void pipe_move(pipe_t* p) {
+// returns true if 1 should be added to the score
+bool pipe_move(pipe_t* p) {
     p->hole.x -= PIPE_SPEED;
     if (p->hole.x < 0) {
         p->hole.x = SCREEN_WIDTH - 1;
         pipe_newy(p);
+        p->passed = false;
+    } else if (p->hole.x < BIRD_X && !(p->passed)) {
+        p->passed = true;
+        return true;
     }
+
+    return false;
 }
 
 bool pipe_collision(pipe_t* p, coordinate_t* bird) {

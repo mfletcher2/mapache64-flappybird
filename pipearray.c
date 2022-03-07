@@ -24,9 +24,14 @@ void pipearray_init(void) {
     }
 }
 
-void pipearray_move(void) {
+// returns true if 1 should be added to the score
+bool pipearray_move(void) {
     uint8_t i;
-    for (i = 0; i < PIPEARRAY_SIZE; i++) pipe_move(pipearray + i);
+    bool addscore = false;
+    for (i = 0; i < PIPEARRAY_SIZE; i++)
+        if (pipe_move(pipearray + i)) addscore = true;
+
+    return addscore;
 }
 
 void pipearray_draw(void) {
