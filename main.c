@@ -31,18 +31,6 @@ uint16_t CONTROLLER_1_PREV;
 
 void fill_vram(void);
 
-// run once on startup
-void reset(void) {
-    load_patterns();
-    pipearray_init();
-    bird_init(&bird);
-    score = 0;
-    draw_score();
-
-    // fill_vram();
-    // stop();
-}
-
 void draw_score() {
     if (score < 10)
         TXBL[4][16] = score + '0' | COLOR_SELECT_MASK;
@@ -54,6 +42,18 @@ void draw_score() {
         TXBL[4][15] = (score / 10) % 10 + '0' | COLOR_SELECT_MASK;
         TXBL[4][14] = score % 100 + '0' | COLOR_SELECT_MASK;
     }
+}
+
+// run once on startup
+void reset(void) {
+    load_patterns();
+    pipearray_init();
+    bird_init(&bird);
+    score = 0;
+    draw_score();
+
+    // fill_vram();
+    // stop();
 }
 
 // run 60 times a second
