@@ -16,6 +16,7 @@ void bird_init(bird_t *bird) {
         OBM[i].pattern_config = white_pattern;
         OBM[i].color = YELLOW_C_MASK;
         OBM[i].x = bird->pos.x;
+        OBM[i].y = bird->pos.y;
     }
 }
 

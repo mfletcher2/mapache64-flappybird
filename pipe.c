@@ -20,30 +20,36 @@ bool pipe_collision(pipe_t* p, coordinate_t* bird) {
     if (bird->x < p->hole.x - BIRD_WIDTH || bird->x > p->hole.x + PIPE_WIDTH)
         return false;
 
-    if (p->hole.y > bird->y ||
-        bird->y + BIRD_HEIGHT > p->hole.y + PIPE_HOLE_HEIGHT)
-        return true;
-
-    return false;
+    return p->hole.y > bird->y ||
+           bird->y + BIRD_HEIGHT > p->hole.y + PIPE_HOLE_HEIGHT;
 }
 
 void pipe_draw(pipe_t* p) {
     uint8_t j;
 
-    for (j = 0; j < PIPE_OBMAS_SIZE; j++) {
-        OBM[p->obmas[j]].x = p->hole.x;
+    if (p->hole.x > SCREEN_WIDTH) {
+        for (j = 0; j < PIPE_OBMAS_SIZE; j++) {
+            OBM[p->obmas[j]].x = 0;
+            OBM[p->obmas[j]].y = 256;
+        }
     }
 
-    if (OBM[p->obmas[0]].y != p->hole.y - 8 &&
-        OBM[p->obmas[0]].y !=
-            p->hole.y - 8 + SCREEN_HEIGHT) {  // if y value has changed
-        uint8_t newy = p->hole.y;
+    else {
         for (j = 0; j < PIPE_OBMAS_SIZE; j++) {
-            newy -= 8;
-            if (newy > p->hole.y && newy < p->hole.y + PIPE_HOLE_HEIGHT)
-                newy = p->hole.y + PIPE_HOLE_HEIGHT;
-            OBM[p->obmas[j]].y = newy;
-            if (newy < SCREEN_START) newy += SCREEN_HEIGHT;
+            OBM[p->obmas[j]].x = p->hole.x;
+        }
+
+        if (OBM[p->obmas[0]].y != p->hole.y - 8 &&
+            OBM[p->obmas[0]].y !=
+                p->hole.y - 8 + SCREEN_HEIGHT) {  // if y value has changed
+            uint8_t newy = p->hole.y;
+            for (j = 0; j < PIPE_OBMAS_SIZE; j++) {
+                newy -= 8;
+                if (newy > p->hole.y && newy < p->hole.y + PIPE_HOLE_HEIGHT)
+                    newy = p->hole.y + PIPE_HOLE_HEIGHT;
+                OBM[p->obmas[j]].y = newy;
+                if (newy < SCREEN_START) newy = SCREEN_END;
+            }
         }
     }
 }

@@ -8,7 +8,7 @@
 #define BIRD_WIDTH 8
 #define BIRD_HEIGHT 8
 #define BIRD_OBMAS_SIZE 1
-#define BIRD_FLAP_STRENGTH -(SINT_TO_Q9_6(3))
+#define BIRD_FLAP_STRENGTH -(SINT_TO_Q9_6(2))
 #define BIRD_GRAVITY ((Q9_6)0x000a)
 
 typedef struct bird_s {
