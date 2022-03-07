@@ -71,7 +71,8 @@ void do_logic(void) {
 
         bird_move(&bird);
 
-        if (pipearray_collision(&(bird.pos)) || bird.pos.y > SCREEN_END - 8)
+        if (pipearray_collision(&(bird.pos)) ||
+            bird.pos.y > SCREEN_END - BIRD_HEIGHT)
             game_running = false;
 
         pipearray_draw();
