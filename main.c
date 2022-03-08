@@ -48,7 +48,7 @@ void draw_score(void) {
 void reset_TXBL(void) {
     uint8_t i, j;
     for (i = 0; i < 30; i++)
-        for (j = 0; j < 32; j++) TXBL[i][i] = 0;
+        for (j = 0; j < 32; j++) TXBL[i][j] = 0;
 }
 
 void init_vram(void) {
@@ -86,7 +86,7 @@ void reset(void) {
     draw_score();
 
     // fill_vram();
-    stop();
+    // stop();
 }
 
 // run 60 times a second

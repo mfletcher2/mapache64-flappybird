@@ -5,7 +5,7 @@
 
 typedef struct coordinate_s {
     sint16_t x;
-    sint8_t y;
+    sint16_t y;
 } coordinate_t;
 
 #endif
