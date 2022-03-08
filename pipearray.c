@@ -18,7 +18,7 @@ void pipearray_init(void) {
         for (j = 0; j < PIPE_OBMAS_SIZE; j++) {
             pipearray[i].obmas[j] = k;
             OBM[k].pattern_config = white_pattern;
-            OBM[k].color = WHITE_C_MASK;
+            OBM[k].color = GREEN_C_MASK;
             k++;
         }
     }
