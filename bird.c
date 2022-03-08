@@ -13,7 +13,7 @@ void bird_init(bird_t *bird) {
 
     for (i = 0; i < BIRD_OBMAS_SIZE; i++) {
         bird->obmas[i] = i;
-        OBM[i].pattern_config = white_small_pattern_pmfa;
+        OBM[i].pattern_config = bird_pattern_pmfa;
         OBM[i].color = YELLOW_C_MASK;
         OBM[i].x = bird->pos.x;
         OBM[i].y = bird->pos.y;

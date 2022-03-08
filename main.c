@@ -23,8 +23,9 @@
 #include "pipearray.h"
 
 bird_t bird;
-bool game_running;
+bool game_running = false;
 uint8_t score;
+bool vram_initialized = false;
 
 uint16_t CONTROLLER_1_PEDGE;
 uint16_t CONTROLLER_1_PREV;
@@ -33,27 +34,52 @@ void fill_vram(void);
 
 void draw_score(void) {
     if (score < 10)
-        TXBL[4][16] = score + '0' | COLOR_SELECT_MASK;
+        TXBL[4][16] = score + '0';
     else if (score < 100) {
-        TXBL[4][16] = score % 10 + '0' | COLOR_SELECT_MASK;
-        TXBL[4][15] = score / 10 + '0' | COLOR_SELECT_MASK;
+        TXBL[4][16] = score % 10 + '0';
+        TXBL[4][15] = score / 10 + '0';
     } else {
-        TXBL[4][16] = score % 10 + '0' | COLOR_SELECT_MASK;
-        TXBL[4][15] = (score / 10) % 10 + '0' | COLOR_SELECT_MASK;
-        TXBL[4][14] = score % 100 + '0' | COLOR_SELECT_MASK;
+        TXBL[4][16] = score % 10 + '0';
+        TXBL[4][15] = (score / 10) % 10 + '0';
+        TXBL[4][14] = score % 100 + '0';
     }
 }
 
 void reset_TXBL(void) {
     uint8_t i, j;
-    for (i = 0; i < 32; i++)
-        for (j = 0; j < 30; j++) TXBL[i][i] = 0;
+    for (i = 0; i < 30; i++)
+        for (j = 0; j < 32; j++) TXBL[i][i] = 0;
+}
+
+void init_vram(void) {
+    uint8_t i, j;
+    // clear vram
+    for (i = 0; i < 64; i++) {
+        OBM[i].y = 0xff;
+    }
+
+    load_patterns();
+
+    // load background
+    background_palette = WHITE_C0_MASK | CYAN_C1_MASK;
+    for (i = 0; i < 7; i++)
+        for (j = 0; j < 32; j++) NTBL[i][j] = white_pattern_pmba;
+
+    for (i = 7; i < 22; i++)
+        for (j = 0; j < 32; j++)
+            NTBL[i][j] = white_pattern_pmba | COLOR_SELECT_MASK;
+
+    for (i = 22; i < 30; i++)
+        for (j = 0; j < 32; j++) NTBL[i][j] = black_pattern_pmba;
+
+    vram_initialized = true;
 }
 
 // run once on startup
 void reset(void) {
+    if (!vram_initialized) init_vram();
+
     reset_TXBL();
-    load_patterns();
     pipearray_init();
     bird_init(&bird);
     score = 0;

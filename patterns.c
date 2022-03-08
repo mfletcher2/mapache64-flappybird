@@ -13,4 +13,8 @@ void load_foreground_pattern(const pattern_t pattern, const uint8_t pmfa) {
 void load_patterns(void) {
     load_foreground_pattern(white_pattern, white_pattern_pmfa);
     load_foreground_pattern(white_small_pattern, white_small_pattern_pmfa);
+    load_foreground_pattern(bird_pattern, bird_pattern_pmfa);
+
+    load_background_pattern(white_pattern, white_pattern_pmba);
+    load_background_pattern(black_pattern, black_pattern_pmba);
 }

@@ -6,7 +6,7 @@ HEADERS = patterns.h pipe.h pipearray.h bird.h coordinate.h
 
 
 # List of PNG images used for patterns
-IMAGES = white.png white_small.png
+IMAGES = white.png white_small.png black.png bird.png
 
 
 # Where the intermediate-stage Assembly/object files will be saved
