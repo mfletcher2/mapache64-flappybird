@@ -31,7 +31,7 @@ uint16_t CONTROLLER_1_PREV;
 
 void fill_vram(void);
 
-void draw_score() {
+void draw_score(void) {
     if (score < 10)
         TXBL[4][16] = score + '0' | COLOR_SELECT_MASK;
     else if (score < 100) {
@@ -44,8 +44,15 @@ void draw_score() {
     }
 }
 
+void reset_TXBL(void) {
+    uint8_t i, j;
+    for (i = 0; i < 32; i++)
+        for (j = 0; j < 30; j++) TXBL[i][i] = 0;
+}
+
 // run once on startup
 void reset(void) {
+    reset_TXBL();
     load_patterns();
     pipearray_init();
     bird_init(&bird);
@@ -53,7 +60,7 @@ void reset(void) {
     draw_score();
 
     // fill_vram();
-    // stop();
+    stop();
 }
 
 // run 60 times a second
@@ -63,7 +70,7 @@ void do_logic(void) {
     CONTROLLER_1_PREV = CONTROLLER_1;
 
     if (game_running) {
-        if(pipearray_move()) {
+        if (pipearray_move()) {
             score++;
             draw_score();
         }
@@ -81,10 +88,6 @@ void do_logic(void) {
         pipearray_draw();
         bird_draw(&bird);
     } else if (CONTROLLER_1_PEDGE & CONTROLLER_A_MASK) {
-        // reset text table
-        uint8_t i;
-        for (i = 14; i <= 16; i++) TXBL[4][i] = 0;
-
         reset();
         game_running = true;
     }
