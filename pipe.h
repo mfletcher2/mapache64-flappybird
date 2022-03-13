@@ -4,8 +4,6 @@
 
 #include <int.h>
 
-#include "coordinate.h"
-
 #define PIPE_WIDTH 8
 #define PIPE_HOLE_HEIGHT 24
 #define PIPE_OBMAS_SIZE 15

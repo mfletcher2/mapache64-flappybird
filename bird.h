@@ -3,8 +3,6 @@
 
 #include <Q9_6.h>
 
-#include "coordinate.h"
-
 #define BIRD_WIDTH 6
 #define BIRD_HEIGHT 6
 #define BIRD_OBMAS_SIZE 1

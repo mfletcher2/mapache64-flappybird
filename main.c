@@ -85,10 +85,7 @@ void init_vram(void) {
 // run once on startup
 void reset(void) {
     if (!vram_initialized) init_vram();
-
     reset_TXBL();
-    pipearray_init();
-    bird_init(&bird);
     score = 0;
     draw_score();
 
@@ -126,6 +123,8 @@ void do_logic(void) {
         movepipe = !movepipe;
     } else if (CONTROLLER_1_PEDGE & CONTROLLER_A_MASK) {
         reset();
+        pipearray_init();
+        bird_init(&bird);
         game_running = true;
     } else {
         bird_move(&bird);
