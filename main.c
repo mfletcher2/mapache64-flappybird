@@ -26,6 +26,7 @@ bird_t bird;
 bool game_running = false;
 uint8_t score;
 bool vram_initialized = false;
+bool movepipe;
 
 uint16_t CONTROLLER_1_PEDGE;
 uint16_t CONTROLLER_1_PREV;
@@ -49,6 +50,12 @@ void reset_TXBL(void) {
     uint8_t i, j;
     for (i = 0; i < 30; i++)
         for (j = 0; j < 32; j++) TXBL[i][j] = 0;
+}
+
+void show_gameover(void) {
+    uint8_t i;
+    const char gameover[] = "Game Over!";
+    for (i = 0; i < 10; i++) TXBL[2][i + 12] = gameover[i];
 }
 
 void init_vram(void) {
@@ -96,26 +103,33 @@ void do_logic(void) {
     CONTROLLER_1_PREV = CONTROLLER_1;
 
     if (game_running) {
-        if (pipearray_move()) {
+        if (movepipe && pipearray_move()) {
             score++;
             draw_score();
         }
 
         if ((CONTROLLER_1_PEDGE & CONTROLLER_A_MASK) &&
-            bird.pos.y > SCREEN_START)
+            Q9_6_to_sint16(bird.y) > SCREEN_START)
             bird_flap(&bird);
 
         bird_move(&bird);
 
-        if (pipearray_collision(&(bird.pos)) ||
-            bird.pos.y > SCREEN_END - BIRD_HEIGHT)
+        if (pipearray_collision(&bird) ||
+            Q9_6_to_sint16(bird.y) >= SCREEN_END - BIRD_HEIGHT - 8) {
             game_running = false;
+            show_gameover();
+        }
 
         pipearray_draw();
         bird_draw(&bird);
+
+        movepipe = !movepipe;
     } else if (CONTROLLER_1_PEDGE & CONTROLLER_A_MASK) {
         reset();
         game_running = true;
+    } else {
+        bird_move(&bird);
+        bird_draw(&bird);
     }
 }
 

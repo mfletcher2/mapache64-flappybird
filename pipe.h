@@ -6,7 +6,6 @@
 
 #include "coordinate.h"
 
-#define PIPE_SPEED 1
 #define PIPE_WIDTH 8
 #define PIPE_HOLE_HEIGHT 24
 #define PIPE_OBMAS_SIZE 15
@@ -16,8 +15,8 @@
 #define SCREEN_WIDTH 256
 
 typedef struct pipe_s {
-    coordinate_t hole;
-    uint8_t obmas[PIPE_OBMAS_SIZE];
+    uint8_t obmas[PIPE_OBMAS_SIZE], holey;
+    sint16_t holex;
     bool passed;
 } pipe_t;
 
@@ -27,6 +26,6 @@ void pipe_newy(pipe_t *);
 
 void pipe_draw(pipe_t *);
 
-bool pipe_collision(pipe_t *p, coordinate_t *bird);
+bool pipe_collision(pipe_t *p, bird_t *bird);
 
 #endif

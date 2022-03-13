@@ -10,12 +10,12 @@
 
 // returns true if 1 should be added to the score
 bool pipe_move(pipe_t* p) {
-    p->hole.x -= PIPE_SPEED;
-    if (p->hole.x < 0) {
-        p->hole.x = SCREEN_WIDTH - 1;
+    p->holex -= 1;
+    if (p->holex < 0) {
+        p->holex = SCREEN_WIDTH - 1;
         pipe_newy(p);
         p->passed = false;
-    } else if (p->hole.x < BIRD_X && !(p->passed)) {
+    } else if (p->holex < BIRD_X && !(p->passed)) {
         p->passed = true;
         return true;
     }
@@ -23,18 +23,18 @@ bool pipe_move(pipe_t* p) {
     return false;
 }
 
-bool pipe_collision(pipe_t* p, coordinate_t* bird) {
-    if (bird->x < p->hole.x - BIRD_WIDTH || bird->x > p->hole.x + PIPE_WIDTH)
+bool pipe_collision(pipe_t* p, bird_t* bird) {
+    if (bird->x < p->holex - BIRD_WIDTH || bird->x > p->holex + PIPE_WIDTH)
         return false;
 
-    return p->hole.y > bird->y ||
-           bird->y + BIRD_HEIGHT > p->hole.y + PIPE_HOLE_HEIGHT;
+    return p->holey > bird->y ||
+           bird->y + BIRD_HEIGHT > p->holey + PIPE_HOLE_HEIGHT;
 }
 
 void pipe_draw(pipe_t* p) {
     uint8_t j;
 
-    if (p->hole.x >= SCREEN_WIDTH) {
+    if (p->holex >= SCREEN_WIDTH) {
         for (j = 0; j < PIPE_OBMAS_SIZE; j++) {
             OBM[p->obmas[j]].x = 0;
             OBM[p->obmas[j]].y = 255;
@@ -43,13 +43,13 @@ void pipe_draw(pipe_t* p) {
 
     else {
         for (j = 0; j < PIPE_OBMAS_SIZE; j++) {
-            OBM[p->obmas[j]].x = p->hole.x;
+            OBM[p->obmas[j]].x = p->holex;
         }
 
-        if (OBM[p->obmas[0]].y != p->hole.y - 8 &&
+        if (OBM[p->obmas[0]].y != p->holey - 8 &&
             OBM[p->obmas[0]].y !=
-                p->hole.y - 8 + SCREEN_HEIGHT) {  // if y value has changed
-            uint8_t newy = p->hole.y;
+                p->holey - 8 + SCREEN_HEIGHT) {  // if y value has changed
+            uint8_t newy = p->holey;
             for (j = 0; j < PIPE_OBMAS_SIZE; j++) {
                 if (newy != 255) newy -= 8;
 
@@ -57,9 +57,9 @@ void pipe_draw(pipe_t* p) {
                     newy = SCREEN_START;
                     OBM[p->obmas[j]].y = newy;
                     newy = SCREEN_END - 8;
-                } else if (newy > p->hole.y &&
-                           newy < p->hole.y + PIPE_HOLE_HEIGHT) {
-                    newy = p->hole.y + PIPE_HOLE_HEIGHT;
+                } else if (newy > p->holey &&
+                           newy < p->holey + PIPE_HOLE_HEIGHT) {
+                    newy = p->holey + PIPE_HOLE_HEIGHT;
                     OBM[p->obmas[j]].y = newy;
                     newy = 255;
                 } else
@@ -70,5 +70,6 @@ void pipe_draw(pipe_t* p) {
 }
 
 void pipe_newy(pipe_t* p) {
-    p->hole.y = SCREEN_START + 8 + rand() % (SCREEN_HEIGHT - 16);
+    p->holey = SCREEN_START + 8 + rand() % (SCREEN_HEIGHT - 48);
+    p->passed = false;
 }

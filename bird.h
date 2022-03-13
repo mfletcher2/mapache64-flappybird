@@ -13,9 +13,8 @@
 #define BIRD_X 48
 
 typedef struct bird_s {
-    coordinate_t pos;
-    Q9_6 y_velocity;
-    uint8_t obmas[BIRD_OBMAS_SIZE];
+    Q9_6 y_velocity, y;
+    uint8_t obmas[BIRD_OBMAS_SIZE], x;
 } bird_t;
 
 void bird_init(bird_t *);
