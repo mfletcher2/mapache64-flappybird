@@ -3,6 +3,7 @@
 #define __PIPE_H
 
 #include <int.h>
+#include "bird.h"
 
 #define PIPE_WIDTH 8
 #define PIPE_HOLE_HEIGHT 24

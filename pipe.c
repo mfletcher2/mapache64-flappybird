@@ -27,8 +27,8 @@ bool pipe_collision(pipe_t* p, bird_t* bird) {
     if (bird->x < p->holex - BIRD_WIDTH || bird->x > p->holex + PIPE_WIDTH)
         return false;
 
-    return p->holey > bird->y ||
-           bird->y + BIRD_HEIGHT > p->holey + PIPE_HOLE_HEIGHT;
+    return p->holey > Q9_6_to_sint16(bird->y) ||
+           Q9_6_to_sint16(bird->y) + BIRD_HEIGHT > p->holey + PIPE_HOLE_HEIGHT;
 }
 
 void pipe_draw(pipe_t* p) {
