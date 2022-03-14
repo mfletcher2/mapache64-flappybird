@@ -56,7 +56,7 @@ void pipe_draw(pipe_t* p) {
                 if (newy < SCREEN_START) {
                     newy = SCREEN_START;
                     OBM[p->obmas[j]].y = newy;
-                    newy = SCREEN_END - 8;
+                    newy = SCREEN_END;
                 } else if (newy > p->holey &&
                            newy < p->holey + PIPE_HOLE_HEIGHT) {
                     newy = p->holey + PIPE_HOLE_HEIGHT;
