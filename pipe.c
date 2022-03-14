@@ -51,7 +51,7 @@ void pipe_draw(pipe_t* p) {
                 p->holey - 8 + SCREEN_HEIGHT) {  // if y value has changed
             uint8_t newy = p->holey;
             for (j = 0; j < PIPE_OBMAS_SIZE; j++) {
-                if (newy != 255) newy -= 8;
+                if (newy != p->holey + PIPE_HOLE_HEIGHT) newy -= 8;
 
                 if (newy < SCREEN_START) {
                     newy = SCREEN_START;
@@ -61,7 +61,6 @@ void pipe_draw(pipe_t* p) {
                            newy < p->holey + PIPE_HOLE_HEIGHT) {
                     newy = p->holey + PIPE_HOLE_HEIGHT;
                     OBM[p->obmas[j]].y = newy;
-                    newy = 255;
                 } else
                     OBM[p->obmas[j]].y = newy;
             }
