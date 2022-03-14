@@ -24,7 +24,7 @@ bool pipe_move(pipe_t* p) {
 }
 
 bool pipe_collision(pipe_t* p, bird_t* bird) {
-    if (bird->x < p->holex - BIRD_WIDTH || bird->x > p->holex + PIPE_WIDTH)
+    if (BIRD_X < p->holex - BIRD_WIDTH || BIRD_X > p->holex + PIPE_WIDTH)
         return false;
 
     return p->holey > Q9_6_to_sint16(bird->y) ||

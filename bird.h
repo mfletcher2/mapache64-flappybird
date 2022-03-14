@@ -12,7 +12,7 @@
 
 typedef struct bird_s {
     Q9_6 y_velocity, y;
-    uint8_t obmas[BIRD_OBMAS_SIZE], x;
+    uint8_t obmas[BIRD_OBMAS_SIZE];
 } bird_t;
 
 void bird_init(bird_t *);

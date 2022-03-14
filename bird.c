@@ -7,7 +7,6 @@
 
 void bird_init(bird_t *bird) {
     uint8_t i;
-    bird->x = BIRD_X;
     bird->y = sint16_to_Q9_6(SCREEN_START + (SCREEN_HEIGHT / 2));
     bird->y_velocity = 0;
 
@@ -15,7 +14,7 @@ void bird_init(bird_t *bird) {
         bird->obmas[i] = i;
         OBM[i].pattern_config = bird_pattern_pmfa;
         OBM[i].color = YELLOW_C_MASK;
-        OBM[i].x = bird->x;
+        OBM[i].x = BIRD_X;
         OBM[i].y = Q9_6_to_sint16(bird->y);
     }
 }
