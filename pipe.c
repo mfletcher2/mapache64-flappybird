@@ -70,6 +70,6 @@ void pipe_draw(pipe_t* p) {
 }
 
 void pipe_newy(pipe_t* p) {
-    p->holey = SCREEN_START + 8 + rand() % (SCREEN_HEIGHT - 48);
+    p->holey = SCREEN_START + 8 + rand() % (SCREEN_HEIGHT - 40);
     p->passed = false;
 }

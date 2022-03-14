@@ -3,6 +3,7 @@
 #define __PIPE_H
 
 #include <int.h>
+#include <screen.h>
 #include "bird.h"
 
 #define PIPE_WIDTH 8
@@ -11,7 +12,7 @@
 #define SCREEN_START (8 * 7)
 #define SCREEN_HEIGHT (8 * 16)
 #define SCREEN_END (SCREEN_HEIGHT + SCREEN_START)
-#define SCREEN_WIDTH 256
+#define SCREEN_WIDTH GameWidth
 
 typedef struct pipe_s {
     uint8_t obmas[PIPE_OBMAS_SIZE], holey;

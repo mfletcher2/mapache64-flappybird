@@ -69,14 +69,14 @@ void init_vram(void) {
 
     // load background
     background_palette = WHITE_C0_MASK | CYAN_C1_MASK;
-    for (i = 0; i < 7; i++)
+    for (i = 0; i < SCREEN_START / 8; i++)
         for (j = 0; j < 32; j++) NTBL[i][j] = white_pattern_pmba;
 
-    for (i = 7; i < 22; i++)
+    for (i = SCREEN_START / 8; i < SCREEN_END / 8; i++)
         for (j = 0; j < 32; j++)
             NTBL[i][j] = white_pattern_pmba | COLOR_SELECT_MASK;
 
-    for (i = 22; i < 30; i++)
+    for (i = SCREEN_END / 8; i < GameHeight / 8; i++)
         for (j = 0; j < 32; j++) NTBL[i][j] = black_pattern_pmba;
 
     vram_initialized = true;
@@ -112,7 +112,7 @@ void do_logic(void) {
         bird_move(&bird);
 
         if (pipearray_collision(&bird) ||
-            Q9_6_to_sint16(bird.y) >= SCREEN_END - BIRD_HEIGHT - 8) {
+            Q9_6_to_sint16(bird.y) >= SCREEN_END - BIRD_HEIGHT) {
             game_running = false;
             show_gameover();
         }

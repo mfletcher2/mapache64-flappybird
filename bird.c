@@ -26,8 +26,8 @@ void bird_move(bird_t *bird) {
         SINT_TO_Q9_6(-15), bird->y_velocity + BIRD_GRAVITY, SINT_TO_Q9_6(15));
     bird->y += bird->y_velocity;
 
-    if (Q9_6_to_sint16(bird->y) > SCREEN_END - BIRD_HEIGHT - 8)
-        bird->y = sint16_to_Q9_6(SCREEN_END - BIRD_HEIGHT - 8);
+    if (Q9_6_to_sint16(bird->y) > SCREEN_END - BIRD_HEIGHT)
+        bird->y = sint16_to_Q9_6(SCREEN_END - BIRD_HEIGHT);
 }
 
 void bird_draw(bird_t *bird) {
