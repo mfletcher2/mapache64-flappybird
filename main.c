@@ -27,6 +27,7 @@ bool game_running = false;
 uint8_t score;
 bool vram_initialized = false;
 bool movepipe;
+uint8_t ground_phase;
 
 uint16_t CONTROLLER_1_PEDGE;
 uint16_t CONTROLLER_1_PREV;
@@ -58,6 +59,21 @@ void show_gameover(void) {
     for (i = 0; i < 10; i++) TXBL[2][i + 12] = gameover[i] | COLOR_SELECT_MASK;
 }
 
+void move_ground() {
+    tile_t pmba;
+    uint8_t j;
+
+    if (ground_phase >= 0 && ground_phase <= 3)
+       pmba = ground1_pattern_pmba + ground_phase;
+    else
+        pmba = (ground1_pattern_pmba + 6 - ground_phase) | HFLIP_MASK | VFLIP_MASK;
+
+    for (j = 0; j < 32; j++) NTBL[SCREEN_END / 8][j] = pmba;
+
+    ground_phase++;
+    if (ground_phase > 6) ground_phase = 0;
+}
+
 void init_vram(void) {
     uint8_t i, j;
     // clear vram
@@ -76,7 +92,10 @@ void init_vram(void) {
         for (j = 0; j < 32; j++)
             NTBL[i][j] = white_pattern_pmba | COLOR_SELECT_MASK;
 
-    for (i = SCREEN_END / 8; i < GameHeight / 8; i++)
+    ground_phase = 0;
+    move_ground();
+
+    for (i = SCREEN_END / 8 + 1; i < GameHeight / 8; i++)
         for (j = 0; j < 32; j++) NTBL[i][j] = black_pattern_pmba;
 
     vram_initialized = true;
@@ -100,6 +119,7 @@ void do_logic(void) {
         if (movepipe && pipearray_move()) {
             score++;
             draw_score();
+            move_ground();
         }
 
         if ((CONTROLLER_1_PEDGE & CONTROLLER_A_MASK) &&

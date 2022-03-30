@@ -19,4 +19,9 @@ void load_patterns(void) {
 
     load_background_pattern(white_pattern, white_pattern_pmba);
     load_background_pattern(black_pattern, black_pattern_pmba);
+
+    load_background_pattern(ground1_pattern, ground1_pattern_pmba);
+    load_background_pattern(ground2_pattern, ground2_pattern_pmba);
+    load_background_pattern(ground3_pattern, ground3_pattern_pmba);
+    load_background_pattern(ground4_pattern, ground4_pattern_pmba);
 }
