@@ -35,14 +35,14 @@ void fill_vram(void);
 
 void draw_score(void) {
     if (score < 10)
-        TXBL[4][16] = score + '0';
+        TXBL[4][16] = score + '0' | COLOR_SELECT_MASK;
     else if (score < 100) {
-        TXBL[4][16] = score % 10 + '0';
-        TXBL[4][15] = score / 10 + '0';
+        TXBL[4][16] = score % 10 + '0' | COLOR_SELECT_MASK;
+        TXBL[4][15] = score / 10 + '0' | COLOR_SELECT_MASK;
     } else {
-        TXBL[4][16] = score % 10 + '0';
-        TXBL[4][15] = (score / 10) % 10 + '0';
-        TXBL[4][14] = score % 100 + '0';
+        TXBL[4][16] = score % 10 + '0' | COLOR_SELECT_MASK;
+        TXBL[4][15] = (score / 10) % 10 + '0' | COLOR_SELECT_MASK;
+        TXBL[4][14] = score % 100 + '0' | COLOR_SELECT_MASK;
     }
 }
 
@@ -55,7 +55,7 @@ void reset_TXBL(void) {
 void show_gameover(void) {
     uint8_t i;
     const char gameover[] = "Game Over!";
-    for (i = 0; i < 10; i++) TXBL[2][i + 12] = gameover[i];
+    for (i = 0; i < 10; i++) TXBL[2][i + 12] = gameover[i] | COLOR_SELECT_MASK;
 }
 
 void init_vram(void) {
@@ -68,9 +68,9 @@ void init_vram(void) {
     load_patterns();
 
     // load background
-    background_palette = WHITE_C0_MASK | CYAN_C1_MASK;
+    background_palette = GREEN_C0_MASK | CYAN_C1_MASK;
     for (i = 0; i < SCREEN_START / 8; i++)
-        for (j = 0; j < 32; j++) NTBL[i][j] = white_pattern_pmba;
+        for (j = 0; j < 32; j++) NTBL[i][j] = black_pattern_pmba;
 
     for (i = SCREEN_START / 8; i < SCREEN_END / 8; i++)
         for (j = 0; j < 32; j++)
@@ -88,9 +88,6 @@ void reset(void) {
     reset_TXBL();
     score = 0;
     draw_score();
-
-    // fill_vram();
-    // stop();
 }
 
 // run 60 times a second
