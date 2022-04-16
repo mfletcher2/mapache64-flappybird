@@ -64,9 +64,10 @@ void move_ground() {
     uint8_t j;
 
     if (ground_phase >= 0 && ground_phase <= 3)
-       pmba = ground1_pattern_pmba + ground_phase;
+        pmba = ground1_pattern_pmba + ground_phase;
     else
-        pmba = (ground1_pattern_pmba + 6 - ground_phase) | HFLIP_MASK | VFLIP_MASK;
+        pmba =
+            (ground1_pattern_pmba + 6 - ground_phase) | HFLIP_MASK | VFLIP_MASK;
 
     for (j = 0; j < 32; j++) NTBL[SCREEN_END / 8][j] = pmba;
 
@@ -116,10 +117,14 @@ void do_logic(void) {
     CONTROLLER_1_PREV = CONTROLLER_1;
 
     if (game_running) {
-        if (movepipe && pipearray_move()) {
-            score++;
-            draw_score();
+        
+        if (movepipe) {
             move_ground();
+
+            if (pipearray_move()) {
+                score++;
+                draw_score();
+            }
         }
 
         if ((CONTROLLER_1_PEDGE & CONTROLLER_A_MASK) &&
