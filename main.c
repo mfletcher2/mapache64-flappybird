@@ -117,14 +117,9 @@ void do_logic(void) {
     CONTROLLER_1_PREV = CONTROLLER_1;
 
     if (game_running) {
-        
-        if (movepipe) {
-            move_ground();
-
-            if (pipearray_move()) {
-                score++;
-                draw_score();
-            }
+        if (movepipe && pipearray_move()) {
+            score++;
+            draw_score();
         }
 
         if ((CONTROLLER_1_PEDGE & CONTROLLER_A_MASK) &&
@@ -139,11 +134,13 @@ void do_logic(void) {
             show_gameover();
         }
 
+        move_ground();
         pipearray_draw();
         bird_draw(&bird);
 
         movepipe = !movepipe;
-    } else if (CONTROLLER_1_PEDGE & CONTROLLER_A_MASK) {
+
+    } else if (CONTROLLER_1_PEDGE & CONTROLLER_A_MASK ) {
         reset();
         pipearray_init();
         bird_init(&bird);
