@@ -5,6 +5,8 @@
 .export _white_small_pattern
 .export _black_pattern
 .export _bird_pattern
+.export _bird_dead_pattern
+.export _bird_squish_pattern
 .export _pipe_top_pattern
 .export _pipe_body_pattern
 .export _ground1_pattern
@@ -23,6 +25,12 @@ _black_pattern:
 
 _bird_pattern:
 .incbin "bird.pat"
+
+_bird_dead_pattern:
+.incbin "bird_dead.pat"
+
+_bird_squish_pattern:
+.incbin "bird_squish.pat"
 
 _pipe_top_pattern:
 .incbin "pipe_top.pat"

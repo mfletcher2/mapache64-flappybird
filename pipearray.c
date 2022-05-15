@@ -21,17 +21,17 @@ void pipearray_init(void) {
         OBM[k].color = GREEN_C_MASK;
         k++;
 
-        for (j = 1; j < PIPE_OBMAS_SIZE - 1; j++) {
+        pipearray[i].obmas[1] = k;
+        OBM[k].pattern_config = pipe_top_pattern_pmfa | VFLIP_MASK;
+        OBM[k].color = GREEN_C_MASK;
+        k++;
+
+        for (j = 2; j < PIPE_OBMAS_SIZE; j++) {
             pipearray[i].obmas[j] = k;
             OBM[k].pattern_config = pipe_body_pattern_pmfa;
             OBM[k].color = GREEN_C_MASK;
             k++;
         }
-
-        pipearray[i].obmas[PIPE_OBMAS_SIZE - 1] = k;
-        OBM[k].pattern_config = pipe_top_pattern_pmfa | VFLIP_MASK;
-        OBM[k].color = GREEN_C_MASK;
-        k++;
     }
 }
 

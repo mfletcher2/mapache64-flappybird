@@ -8,6 +8,8 @@ extern const pattern_t white_pattern;
 extern const pattern_t white_small_pattern;
 extern const pattern_t black_pattern;
 extern const pattern_t bird_pattern;
+extern const pattern_t bird_dead_pattern;
+extern const pattern_t bird_squish_pattern;
 extern const pattern_t pipe_top_pattern;
 extern const pattern_t pipe_body_pattern;
 extern const pattern_t ground1_pattern;
@@ -18,6 +20,8 @@ extern const pattern_t ground4_pattern;
 #define white_pattern_pmfa ((uint8_t)0)
 #define white_small_pattern_pmfa ((uint8_t)1)
 #define bird_pattern_pmfa ((uint8_t)2)
+#define bird_dead_pattern_pmfa ((uint8_t)5)
+#define bird_squish_pattern_pmfa ((uint8_t)6)
 #define pipe_top_pattern_pmfa ((uint8_t)3)
 #define pipe_body_pattern_pmfa ((uint8_t)4)
 

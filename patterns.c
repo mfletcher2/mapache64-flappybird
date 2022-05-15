@@ -14,6 +14,8 @@ void load_patterns(void) {
     load_foreground_pattern(white_pattern, white_pattern_pmfa);
     load_foreground_pattern(white_small_pattern, white_small_pattern_pmfa);
     load_foreground_pattern(bird_pattern, bird_pattern_pmfa);
+    load_foreground_pattern(bird_dead_pattern, bird_dead_pattern_pmfa);
+    load_foreground_pattern(bird_squish_pattern, bird_squish_pattern_pmfa);
     load_foreground_pattern(pipe_top_pattern, pipe_top_pattern_pmfa);
     load_foreground_pattern(pipe_body_pattern, pipe_body_pattern_pmfa);
 

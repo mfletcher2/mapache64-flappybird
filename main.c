@@ -24,10 +24,17 @@
 
 bird_t bird;
 bool game_running = false;
+bool show_title;
+bool bobup;
+uint8_t bob_phase;
 uint8_t score;
 bool vram_initialized = false;
 bool movepipe;
 uint8_t ground_phase;
+uint8_t ground_counter;
+
+const char title[] = "Flappy Bird";
+const char gameover[] = "Game Over!";
 
 uint16_t CONTROLLER_1_PEDGE;
 uint16_t CONTROLLER_1_PREV;
@@ -55,24 +62,29 @@ void reset_TXBL(void) {
 
 void show_gameover(void) {
     uint8_t i;
-    const char gameover[] = "Game Over!";
-    for (i = 0; i < 10; i++) TXBL[2][i + 12] = gameover[i] | COLOR_SELECT_MASK;
+    for (i = 0; i < sizeof(gameover) / sizeof(gameover[0]); i++)
+        TXBL[2][i + 11] = gameover[i] | COLOR_SELECT_MASK;
 }
 
 void move_ground() {
     tile_t pmba;
     uint8_t j;
 
-    if (ground_phase >= 0 && ground_phase <= 3)
-        pmba = ground1_pattern_pmba + ground_phase;
-    else
-        pmba =
-            (ground1_pattern_pmba + 6 - ground_phase) | HFLIP_MASK | VFLIP_MASK;
+    if (ground_counter > 4) ground_counter = 0;
+    if (ground_counter == 0 || ground_counter == 2) {
+        if (ground_phase >= 0 && ground_phase <= 3)
+            pmba = ground1_pattern_pmba + ground_phase;
+        else
+            pmba = (ground1_pattern_pmba + 6 - ground_phase) | HFLIP_MASK |
+                   VFLIP_MASK;
 
-    for (j = 0; j < 32; j++) NTBL[SCREEN_END / 8][j] = pmba;
+        for (j = 0; j < 32; j++) NTBL[SCREEN_END / 8][j] = pmba;
 
-    ground_phase++;
-    if (ground_phase > 6) ground_phase = 0;
+        ground_phase++;
+        if (ground_phase > 6) ground_phase = 0;
+    }
+
+    ground_counter++;
 }
 
 void init_vram(void) {
@@ -81,6 +93,12 @@ void init_vram(void) {
     for (i = 0; i < 64; i++) {
         OBM[i].y = 0xff;
     }
+    for (i = 0; i < 31; i++)
+        for (j = 0; j < 15; j++) {
+            PMF[i][j] = 0;
+            PMB[i][j] = 0;
+        }
+    reset_TXBL();
 
     load_patterns();
 
@@ -99,15 +117,19 @@ void init_vram(void) {
     for (i = SCREEN_END / 8 + 1; i < GameHeight / 8; i++)
         for (j = 0; j < 32; j++) NTBL[i][j] = black_pattern_pmba;
 
+    show_title = true;
+    // show title screen text
+    for (i = 0; i < sizeof(title) / sizeof(title[0]); i++)
+        TXBL[3][i + 10] = title[i] | COLOR_SELECT_MASK;
+    bird_init(&bird);
+    bird_draw(&bird);
+
     vram_initialized = true;
 }
 
 // run once on startup
 void reset(void) {
     if (!vram_initialized) init_vram();
-    reset_TXBL();
-    score = 0;
-    draw_score();
 }
 
 // run 60 times a second
@@ -132,6 +154,7 @@ void do_logic(void) {
             Q9_6_to_sint16(bird.y) >= SCREEN_END - BIRD_HEIGHT) {
             game_running = false;
             show_gameover();
+            OBM[0].pattern_config = bird_dead_pattern_pmfa;
         }
 
         move_ground();
@@ -140,11 +163,28 @@ void do_logic(void) {
 
         movepipe = !movepipe;
 
-    } else if (CONTROLLER_1_PEDGE & CONTROLLER_A_MASK ) {
-        reset();
+    } else if ((CONTROLLER_1_PEDGE & CONTROLLER_A_MASK) &&
+               (Q9_6_to_sint16(bird.y) == SCREEN_END - BIRD_HEIGHT ||
+                show_title)) {
+        reset_TXBL();
+        score = 0;
+        draw_score();
         pipearray_init();
         bird_init(&bird);
         game_running = true;
+        show_title = false;
+    } else if (show_title) {
+        move_ground();
+
+        if (bob_phase == 0) {
+            bird.y = sint16_to_Q9_6(SCREEN_START + (SCREEN_HEIGHT / 2) +
+                                    (bobup ? 3 : 0));
+            bird_draw(&bird);
+            bobup = !bobup;
+        }
+
+        bob_phase++;
+        if (bob_phase > 20) bob_phase = 0;
     } else {
         bird_move(&bird);
         bird_draw(&bird);
