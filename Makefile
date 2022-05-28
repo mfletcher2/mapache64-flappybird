@@ -6,7 +6,7 @@ HEADERS = patterns.h pipe.h pipearray.h bird.h
 
 
 # List of PNG images used for patterns
-IMAGES = white.png white_small.png black.png bird.png bird_dead.png bird_squish.png pipe_top.png pipe_body.png ground1.png ground2.png ground3.png ground4.png
+IMAGES = $(shell find patterns -name "*.png")
 
 
 # Where the intermediate-stage Assembly/object files will be saved

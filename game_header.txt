@@ -1,2 +1,2 @@
-{{ Game title }}
-{{ Game information }}
+Flappy Bird
+Created by Max

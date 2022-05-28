@@ -15,37 +15,37 @@
 .export _ground4_pattern
 
 _white_pattern:
-.incbin "white.pat"
+.incbin "patterns/white.pat"
 
 _white_small_pattern:
-.incbin "white_small.pat"
+.incbin "patterns/white_small.pat"
 
 _black_pattern:
-.incbin "black.pat"
+.incbin "patterns/black.pat"
 
 _bird_pattern:
-.incbin "bird.pat"
+.incbin "patterns/bird.pat"
 
 _bird_dead_pattern:
-.incbin "bird_dead.pat"
+.incbin "patterns/bird_dead.pat"
 
 _bird_squish_pattern:
-.incbin "bird_squish.pat"
+.incbin "patterns/bird_squish.pat"
 
 _pipe_top_pattern:
-.incbin "pipe_top.pat"
+.incbin "patterns/pipe_top.pat"
 
 _pipe_body_pattern:
-.incbin "pipe_body.pat"
+.incbin "patterns/pipe_body.pat"
 
 _ground1_pattern:
-.incbin "ground1.pat"
+.incbin "patterns/ground1.pat"
 
 _ground2_pattern:
-.incbin "ground2.pat"
+.incbin "patterns/ground2.pat"
 
 _ground3_pattern:
-.incbin "ground3.pat"
+.incbin "patterns/ground3.pat"
 
 _ground4_pattern:
-.incbin "ground4.pat"
+.incbin "patterns/ground4.pat"
