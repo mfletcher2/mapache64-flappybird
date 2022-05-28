@@ -32,9 +32,11 @@ bool vram_initialized = false;
 bool movepipe;
 uint8_t ground_phase;
 uint8_t ground_counter;
+uint8_t hiscore;
 
 const char title[] = "Flappy Bird";
 const char gameover[] = "Game Over!";
+const char hiscore_text[] = "High score: ";
 
 uint16_t CONTROLLER_1_PEDGE;
 uint16_t CONTROLLER_1_PREV;
@@ -51,6 +53,26 @@ void draw_score(void) {
         TXBL[4][16] = score % 10 + '0' | COLOR_SELECT_MASK;
         TXBL[4][15] = (score / 10) % 10 + '0' | COLOR_SELECT_MASK;
         TXBL[4][14] = score % 100 + '0' | COLOR_SELECT_MASK;
+    }
+}
+
+void draw_hiscore(void) {
+    uint8_t i;
+
+    if(hiscore > 0) {
+        for(i = 0; i < sizeof(hiscore_text); i++)
+            TXBL[26][i + 9] = hiscore_text[i] | COLOR_SELECT_MASK;
+
+        if (hiscore < 10)
+            TXBL[26][i + 9] = hiscore + '0' | COLOR_SELECT_MASK;
+        else if (hiscore < 100) {
+            TXBL[26][i + 10] = hiscore % 10 + '0' | COLOR_SELECT_MASK;
+            TXBL[26][i + 9] = hiscore / 10 + '0' | COLOR_SELECT_MASK;
+        } else {
+            TXBL[26][i + 11] = hiscore % 10 + '0' | COLOR_SELECT_MASK;
+            TXBL[26][i + 10] = (hiscore / 10) % 10 + '0' | COLOR_SELECT_MASK;
+            TXBL[26][i + 9] = hiscore % 100 + '0' | COLOR_SELECT_MASK;
+        }
     }
 }
 
@@ -166,9 +188,13 @@ void do_logic(void) {
     } else if ((CONTROLLER_1_PEDGE & CONTROLLER_A_MASK) &&
                (Q9_6_to_sint16(bird.y) == SCREEN_END - BIRD_HEIGHT ||
                 show_title)) {
+        if(score > hiscore)
+            hiscore = score;
+
         reset_TXBL();
         score = 0;
         draw_score();
+        draw_hiscore();
         pipearray_init();
         bird_init(&bird);
         game_running = true;
