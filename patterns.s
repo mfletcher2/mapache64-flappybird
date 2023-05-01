@@ -9,6 +9,7 @@
 .export _bird_squish_pattern
 .export _pipe_top_pattern
 .export _pipe_body_pattern
+.export _ground0_pattern
 .export _ground1_pattern
 .export _ground2_pattern
 .export _ground3_pattern
@@ -37,6 +38,9 @@ _pipe_top_pattern:
 
 _pipe_body_pattern:
 .incbin "patterns/pipe_body.pat"
+
+_ground0_pattern:
+.incbin "patterns/ground0.pat"
 
 _ground1_pattern:
 .incbin "patterns/ground1.pat"

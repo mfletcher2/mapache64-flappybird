@@ -31,7 +31,6 @@ uint8_t score;
 bool vram_initialized = false;
 bool movepipe;
 uint8_t ground_phase;
-uint8_t ground_counter;
 uint8_t hiscore;
 
 const char title[] = "Flappy Bird";
@@ -92,21 +91,22 @@ void move_ground() {
     tile_t pmba;
     uint8_t j;
 
-    if (ground_counter > 4) ground_counter = 0;
-    if (ground_counter == 0 || ground_counter == 2) {
-        if (ground_phase >= 0 && ground_phase <= 3)
-            pmba = ground1_pattern_pmba + ground_phase;
-        else
-            pmba = (ground1_pattern_pmba + 6 - ground_phase) | HFLIP_MASK |
-                   VFLIP_MASK;
-
-        for (j = 0; j < 32; j++) NTBL[SCREEN_END / 8][j] = pmba;
-
-        ground_phase++;
-        if (ground_phase > 6) ground_phase = 0;
+    switch (ground_phase) {
+        case 0: pmba = ground0_pattern_pmba; break;
+        case 1: pmba = ground1_pattern_pmba; break;
+        case 2: pmba = ground2_pattern_pmba; break;
+        case 3: pmba = ground3_pattern_pmba; break;
+        case 4: pmba = ground4_pattern_pmba; break;
+        case 5: pmba = ground3_pattern_pmba|HFLIP_MASK|VFLIP_MASK; break;
+        case 6: pmba = ground2_pattern_pmba|HFLIP_MASK|VFLIP_MASK; break;
+        case 7: pmba = ground1_pattern_pmba|HFLIP_MASK|VFLIP_MASK; break;
+        default: break;
     }
 
-    ground_counter++;
+    for (j = 0; j < 32; j++) NTBL[SCREEN_END / 8][j] = pmba;
+
+    ground_phase = (ground_phase+1) & 0x7;
+
 }
 
 void init_vram(void) {
@@ -179,7 +179,7 @@ void do_logic(void) {
             OBM[0].pattern_config = bird_dead_pattern_pmfa;
         }
 
-        move_ground();
+        if (FRAME&1) move_ground();
         pipearray_draw();
         bird_draw(&bird);
 
@@ -200,7 +200,7 @@ void do_logic(void) {
         game_running = true;
         show_title = false;
     } else if (show_title) {
-        move_ground();
+        if (FRAME&1) move_ground();
 
         if (bob_phase == 0) {
             bird.y = sint16_to_Q9_6(SCREEN_START + (SCREEN_HEIGHT / 2) +
